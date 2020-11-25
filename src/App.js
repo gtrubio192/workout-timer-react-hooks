@@ -1,5 +1,5 @@
 import React, { useState }from 'react';
-import { Container, Button, Col, Row, FormControl, InputGroup } from 'react-bootstrap/';
+import { Container, Button, Card, Row, FormControl, InputGroup } from 'react-bootstrap/';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { TimerList } from './components/TimerList';
 import './App.css';
@@ -14,10 +14,16 @@ function App() {
     setList(list => [...list, task]);
   }
 
+  const deleteTask = (name) => {
+    console.log(name);
+    const newList = list.filter(item => item.name !== name)
+    setList(newList);
+  }
+
   return (
     <Container fluid className="App">
       <Row className="justify-content-md-center">
-        <Col>
+        <Card>
           <InputGroup className="mb-3">
             <InputGroup.Prepend>
               <InputGroup.Text id="basic-addon3">
@@ -26,8 +32,7 @@ function App() {
             </InputGroup.Prepend>
             <FormControl onChange={(e)=>setTaskName(e.target.value)} id="basic-url" aria-describedby="basic-addon3" />
           </InputGroup>
-        </Col>
-        <Col>
+
           <InputGroup className="mb-3">
             <InputGroup.Prepend>
               <InputGroup.Text id="basic-addon3">
@@ -35,14 +40,18 @@ function App() {
               </InputGroup.Text>
             </InputGroup.Prepend>
             <FormControl onChange={(e)=>setTaskTime(e.target.value)} type="number" id="basic-url" aria-describedby="basic-addon3" />
-          </InputGroup>      
-        </Col>
+          </InputGroup>          
+        </Card>
+
       </Row>
 
-      <Button onClick={addTask}>
+      <Button variant="outline-primary" onClick={addTask}>
         Create Task
       </Button>
-      <TimerList list={list} />
+      <Button variant="success">
+        Start Workout
+      </Button>
+      <TimerList list={list} handleDeleteTask={deleteTask}/>
     </Container>
   );
 }
