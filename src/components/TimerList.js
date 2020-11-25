@@ -1,11 +1,14 @@
 import React from 'react';
 import { ListItem } from './ListItem';
 
-export const TimerList = (props) => {
+export const TimerList = ({list}) => {
     return (
       <div>
-        Hey im a list
-        <ListItem />
+        {
+          list.map(item => (
+            <ListItem itemDetails={item} />
+          ))
+        }
       </div>
     );
 }
