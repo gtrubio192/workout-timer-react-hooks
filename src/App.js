@@ -20,6 +20,19 @@ function App() {
     setList(newList);
   }
 
+  const startWorkout = () => {
+    const delay = ({name, time}) => {
+      setTimeout(() => {
+        console.log(name)
+      }, time*1000);
+    }
+
+    for (let item in list) {
+      console.log(list[item])
+      delay(list[item])
+    }
+  }
+
   return (
     <Container fluid className="App">
       <Row className="justify-content-md-center">
@@ -48,7 +61,7 @@ function App() {
       <Button variant="outline-primary" onClick={addTask}>
         Create Task
       </Button>
-      <Button variant="success">
+      <Button variant="success" onClick={startWorkout}>
         Start Workout
       </Button>
       <TimerList list={list} handleDeleteTask={deleteTask}/>
