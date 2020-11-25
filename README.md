@@ -6,5 +6,9 @@ Try to finish each task with the time limit you gave it!
 Once the timer for an individual task gets to zero, the next task will automatically display and start counting down.
 
 Yes, essentially its a glorified self completing to-do list.
-Inspiration came by doing circuit workouts and I noticed there was no good way on my phone to notify me when to switch to the next workout.
+Inspiration came by doing circuit workouts and this app solves the following:
+- notifications when to switch to the next workout
+- custom time for each task
+- auto start of timer for each task
+
 Hope this helps all your at home workouts :]
