@@ -1,13 +1,26 @@
-import React, { useState }from 'react';
+import React, { useState, useEffect }from 'react';
 import { Container, Button, Card, Row, FormControl, InputGroup } from 'react-bootstrap/';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { TimerList } from './components/TimerList';
+import Timer from './components/Timer';
 import './App.css';
 
 function App() {
   const [list, setList] = useState([]);
   const [taskName, setTaskName] = useState("");
   const [taskTime, setTaskTime] = useState(0);
+  const [currentTask, setCurrentTask] = useState({})
+  const [isActive, setIsActive] = useState(false);
+
+  useEffect(() => { 
+    const test = [
+      {name: "burpees", time: 3},
+      {name: "sit ups", time: 3},
+      {name: "flying", time: 3},
+      {name: "rest", time: 5},
+    ];
+    setList(test)
+  }, [])
 
   const addTask = () => {
     let task = { name: taskName, time: taskTime };
@@ -20,17 +33,20 @@ function App() {
     setList(newList);
   }
 
-  const startWorkout = () => {
-    const delay = ({name, time}) => {
-      setTimeout(() => {
-        console.log(name)
-      }, time*1000);
+  const startWorkout = async () => {
+    setIsActive(!isActive)
+    for ( const item of list ) {
+      setCurrentTask(item)
+      await new Promise( resolve => setTimeout( resolve, item.time*1000 ) )
     }
+  }
 
-    for (let item in list) {
-      console.log(list[item])
-      delay(list[item])
-    }
+  const toggle = () => {
+    setIsActive(!isActive);
+  }
+
+  const reset = () => {
+    setList([]);
   }
 
   return (
@@ -62,9 +78,15 @@ function App() {
         Create Task
       </Button>
       <Button variant="success" onClick={startWorkout}>
-        Start Workout
+        {isActive ? 'Pause' : 'Start'}
       </Button>
+      <Button onClick={reset}>
+        Reset
+      </Button>
+
       <TimerList list={list} handleDeleteTask={deleteTask}/>
+      
+      <Timer time={currentTask.time} task={currentTask.name} isActive={isActive} />
     </Container>
   );
 }

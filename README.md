@@ -14,7 +14,5 @@ Inspiration came by doing circuit workouts and this app solves the following:
 Hope this helps all your at home workouts :]
 
 
-![alt text](./src/mockup.png?raw=true "Mockup")
-
 ![alt text](./src/mockup2.png?raw=true "Mockup 2")
 
