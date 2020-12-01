@@ -16,5 +16,5 @@ Hope this helps all your at home workouts :]
 
 ![alt text](./src/mockup.png?raw=true "Mockup")
 
-![alt text](./src/mockup-2.png?raw=true "Mockup 2")
+![alt text](./src/mockup2.png?raw=true "Mockup 2")
 
