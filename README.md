@@ -12,3 +12,7 @@ Inspiration came by doing circuit workouts and this app solves the following:
 - auto start of timer for each task
 
 Hope this helps all your at home workouts :]
+
+
+
+![Alt text](workout-timer-react-hooks/src/initial-mockup.png?raw=true "Mockup")
