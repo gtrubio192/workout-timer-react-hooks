@@ -15,4 +15,4 @@ Hope this helps all your at home workouts :]
 
 
 
-![Alt text](workout-timer-react-hooks/src/initial-mockup.png?raw=true "Mockup")
+![alt text](workout-timer-react-hooks/src/initial-mockup.png?raw=true "Mockup")
