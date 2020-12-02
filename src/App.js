@@ -11,6 +11,7 @@ function App() {
   const [taskTime, setTaskTime] = useState(0);
   const [currentTask, setCurrentTask] = useState({})
   const [isActive, setIsActive] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(-1);
 
   useEffect(() => { 
     const test = [
@@ -33,12 +34,28 @@ function App() {
     setList(newList);
   }
 
-  const startWorkout = async () => {
-    setIsActive(!isActive)
+  const toggleWorkout = async () => {
+    setIsActive(!isActive);    
     for ( const item of list ) {
       setCurrentTask(item);
-      await new Promise( resolve => setTimeout( resolve, item.time*1000 + 1000) )
+      await new Promise( resolve => setTimeout( resolve, item.time*1000 + 2000) )
     }
+  }
+
+  useEffect(() => {
+    if(isActive) {
+      setCurrentIndex(currentIndex => currentIndex + 1);
+    }
+  }, [isActive])
+
+  useEffect(() => {
+    if(list.length > 0 && list.length >= currentIndex - 1) {
+      setCurrentTask(list[currentIndex])
+    }
+  }, [currentIndex])
+
+  const handleNextItem = () => {
+    setCurrentIndex(currentIndex => currentIndex + 1);
   }
 
   const toggle = () => {
@@ -77,7 +94,7 @@ function App() {
       <Button variant="outline-primary" onClick={addTask}>
         Create Task
       </Button>
-      <Button variant="success" onClick={startWorkout}>
+      <Button variant="success" onClick={toggle}>
         {isActive ? 'Pause' : 'Start'}
       </Button>
       <Button onClick={reset}>
@@ -86,7 +103,7 @@ function App() {
 
       <TimerList list={list} handleDeleteTask={deleteTask}/>
       {
-        isActive && <Timer time={currentTask.time} task={currentTask.name} isActive={isActive} />
+        currentTask.time && <Timer time={currentTask.time} task={currentTask.name} isActive={isActive} nextItem={handleNextItem} />
       }
       {/* <Timer time={currentTask.time} task={currentTask.name} isActive={isActive} /> */}
     </Container>

@@ -25,6 +25,9 @@ const Timer = (props) => {
           console.log(seconds + " " + task)
           setSeconds(seconds => seconds - 1);
         }
+        else {
+          props.nextItem()
+        }
       }, 1000);
     } else if (!isActive && seconds !== 0) {
       clearInterval(interval);
