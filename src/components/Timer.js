@@ -1,9 +1,22 @@
 import React, { useState, useEffect } from 'react';
+import useSound from 'use-sound';
+import soundUrl from '../sounds/ding.mp3';
+import successUrl from '../sounds/success.mp3';
 
 const Timer = (props) => {
   const [seconds, setSeconds] = useState(props.time);
   const [task, setTask] = useState(props.task)
   const [isActive, setIsActive] = useState(props.isActive);
+
+  const [play, { stop }] = useSound(
+    soundUrl,
+    { volume: .5 }
+  );
+
+  const [playSuccess, { stahp }] = useSound(
+    successUrl,
+    { volume: 1 }
+  );
 
   function toggle() {
     setIsActive(!isActive);
@@ -13,6 +26,14 @@ const Timer = (props) => {
     setSeconds(props.time);
     setIsActive(false);
     setTask(props.task);
+  }
+
+  const sleep = (milliseconds) => {
+    const date = Date.now();
+    let currentDate = null;
+    do {
+      currentDate = Date.now();
+    } while (currentDate - date < milliseconds);
   }
 
   useEffect(() => {
@@ -26,11 +47,16 @@ const Timer = (props) => {
           setSeconds(seconds => seconds - 1);
         }
         else {
-          props.nextItem()
+          play();
+          // sleep(1500);
+          props.nextItem();
         }
       }, 1000);
     } else if (!isActive && seconds !== 0) {
       clearInterval(interval);
+    }
+    else if(!props.isActive) {
+      playSuccess();
     }
     return () => clearInterval(interval);
   }, [props.isActive, seconds]);

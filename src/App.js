@@ -13,7 +13,7 @@ function App() {
   const [isActive, setIsActive] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(-1);
 
-  useEffect(() => { 
+  useEffect(() => {
     const test = [
       {name: "burpees", time: 3},
       {name: "sit ups", time: 3},
@@ -49,7 +49,8 @@ function App() {
   }, [isActive])
 
   useEffect(() => {
-    if(list.length > 0 && list.length >= currentIndex - 1) {
+    // setTimeout( ()=>{ console.log('...')}, 2000 );
+    if(list.length > 0 && list.length >= currentIndex) {
       setCurrentTask(list[currentIndex])
     }
   }, [currentIndex])
@@ -103,7 +104,9 @@ function App() {
 
       <TimerList list={list} handleDeleteTask={deleteTask}/>
       {
-        currentTask.time && <Timer time={currentTask.time} task={currentTask.name} isActive={isActive} nextItem={handleNextItem} />
+        currentTask && currentTask.time > 0
+        ? <Timer time={currentTask.time} task={currentTask.name} isActive={isActive} nextItem={handleNextItem} />
+        : <Timer time={0} task={'End of the road'} isActive={false} nextItem={handleNextItem} />
       }
       {/* <Timer time={currentTask.time} task={currentTask.name} isActive={isActive} /> */}
     </Container>
