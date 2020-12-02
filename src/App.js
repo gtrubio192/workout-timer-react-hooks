@@ -36,8 +36,8 @@ function App() {
   const startWorkout = async () => {
     setIsActive(!isActive)
     for ( const item of list ) {
-      setCurrentTask(item)
-      await new Promise( resolve => setTimeout( resolve, item.time*1000 ) )
+      setCurrentTask(item);
+      await new Promise( resolve => setTimeout( resolve, item.time*1000 + 1000) )
     }
   }
 
@@ -85,8 +85,10 @@ function App() {
       </Button>
 
       <TimerList list={list} handleDeleteTask={deleteTask}/>
-      
-      <Timer time={currentTask.time} task={currentTask.name} isActive={isActive} />
+      {
+        isActive && <Timer time={currentTask.time} task={currentTask.name} isActive={isActive} />
+      }
+      {/* <Timer time={currentTask.time} task={currentTask.name} isActive={isActive} /> */}
     </Container>
   );
 }

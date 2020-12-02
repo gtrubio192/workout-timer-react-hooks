@@ -17,15 +17,26 @@ const Timer = (props) => {
 
   useEffect(() => {
     let interval = null;
-    if (isActive) {
+
+    if (props.isActive) {
+      setIsActive(props.isActive);
       interval = setInterval(() => {
-        setSeconds(seconds => seconds - 1);
+        if(seconds >= 1) {
+          console.log(seconds + " " + task)
+          setSeconds(seconds => seconds - 1);
+        }
       }, 1000);
     } else if (!isActive && seconds !== 0) {
       clearInterval(interval);
     }
     return () => clearInterval(interval);
-  }, [seconds, task]);
+  }, [props.isActive, seconds]);
+
+
+  useEffect(() => {
+    setTask(props.task);
+    setSeconds(props.time);
+  },[props.task, props.time])
 
   return (
     <div className="app">
