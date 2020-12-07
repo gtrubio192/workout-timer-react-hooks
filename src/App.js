@@ -11,8 +11,9 @@ function App() {
   const [taskTime, setTaskTime] = useState(0);
   const [currentTask, setCurrentTask] = useState({})
   const [isActive, setIsActive] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(-1);
 
-  useEffect(() => { 
+  useEffect(() => {
     const test = [
       {name: "burpees", time: 3},
       {name: "sit ups", time: 3},
@@ -33,12 +34,29 @@ function App() {
     setList(newList);
   }
 
-  const startWorkout = async () => {
-    setIsActive(!isActive)
+  const toggleWorkout = async () => {
+    setIsActive(!isActive);    
     for ( const item of list ) {
       setCurrentTask(item);
-      await new Promise( resolve => setTimeout( resolve, item.time*1000 + 1000) )
+      await new Promise( resolve => setTimeout( resolve, item.time*1000 + 2000) )
     }
+  }
+
+  useEffect(() => {
+    if(isActive) {
+      setCurrentIndex(currentIndex => currentIndex + 1);
+    }
+  }, [isActive])
+
+  useEffect(() => {
+    // setTimeout( ()=>{ console.log('...')}, 2000 );
+    if(list.length > 0 && list.length >= currentIndex) {
+      setCurrentTask(list[currentIndex])
+    }
+  }, [currentIndex])
+
+  const handleNextItem = () => {
+    setCurrentIndex(currentIndex => currentIndex + 1);
   }
 
   const toggle = () => {
@@ -77,7 +95,7 @@ function App() {
       <Button variant="outline-primary" onClick={addTask}>
         Create Task
       </Button>
-      <Button variant="success" onClick={startWorkout}>
+      <Button variant="success" onClick={toggle}>
         {isActive ? 'Pause' : 'Start'}
       </Button>
       <Button onClick={reset}>
@@ -86,7 +104,9 @@ function App() {
 
       <TimerList list={list} handleDeleteTask={deleteTask}/>
       {
-        isActive && <Timer time={currentTask.time} task={currentTask.name} isActive={isActive} />
+        currentTask && currentTask.time > 0
+        ? <Timer time={currentTask.time} task={currentTask.name} isActive={isActive} nextItem={handleNextItem} />
+        : <Timer time={0} task={'End of the road'} isActive={false} nextItem={handleNextItem} />
       }
       {/* <Timer time={currentTask.time} task={currentTask.name} isActive={isActive} /> */}
     </Container>
