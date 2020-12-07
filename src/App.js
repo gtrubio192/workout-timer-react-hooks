@@ -23,6 +23,8 @@ function App() {
     setList(test)
   }, [])
 
+  // when adding a new task, tack on a 2 second reset into array
+  // reset will be tagged w/bool and passed into timer progress bar
   const addTask = () => {
     let task = { name: taskName, time: taskTime };
     setList(list => [...list, task]);
@@ -106,7 +108,7 @@ function App() {
       {
         currentTask && currentTask.time > 0
         ? <Timer time={currentTask.time} task={currentTask.name} isActive={isActive} nextItem={handleNextItem} />
-        : <Timer time={0} task={'End of the road'} isActive={false} nextItem={handleNextItem} />
+        : <Timer time={0} task={'Great Job!'} isActive={false} nextItem={handleNextItem} />
       }
       {/* <Timer time={currentTask.time} task={currentTask.name} isActive={isActive} /> */}
     </Container>

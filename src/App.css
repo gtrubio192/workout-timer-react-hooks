@@ -24,3 +24,13 @@
   border-radius: 50%;
   padding: 2px 6px;
 }
+
+.timer-container {
+  position: relative;
+}
+
+.timer-info {
+  position: absolute;
+  top: 90px;
+  left: 90px;
+}
